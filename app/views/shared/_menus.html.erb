@@ -1,0 +1,28 @@
+<% case @menu_group
+   when 'ホーム' %>
+<% when '家計簿' %>
+  <%= link_to_menu '仕訳帳', deals_path %>
+  <%= link_to_menu '収支表', profit_and_loss_path %>
+  <%= link_to_menu '資産表', assets_path %>
+  <%= link_to_menu '貸借対照表', balance_sheet_path %>
+<% when '精算' %>
+  <%= render :partial => 'settlements/menu' %>
+<% when '設定' %>
+  <%= link_to_menu '口座', settings_assets_path %>
+  <%= link_to_menu '費目', settings_expenses_path %>
+  <%= link_to_menu '収入内訳', settings_incomes_path %>
+  <%= link_to_menu '記入パターン', settings_deal_patterns_path %>
+  <%= link_to_menu 'プロフィール', :controller => '/users',:action => 'edit' %>
+  <%= link_to_menu 'カスタマイズ', settings_preferences_path %>
+  <%= link_to_menu 'シングルログイン', settings_single_logins_path %>
+<% when '連携' %>
+  <%= link_to_menu 'フレンド', settings_friends_path %>
+  <%= link_to_menu '取引連動', settings_account_links_path %>
+  <%= link_to_menu '受け皿', settings_partner_accounts_path %>
+<% when 'データ管理' %>
+  <%= link_to_menu 'エクスポート', export_path %>
+<% when 'ヘルプ' %>
+  <%= link_to_menu '小槌の特徴', :controller => '/help', :action => 'index' %>
+  <%= link_to_menu 'できること', :controller => '/help', :action => 'functions' %>
+  <%= link_to_menu 'FAQ', :controller => '/help', :action => 'faq' %>
+<% end %>

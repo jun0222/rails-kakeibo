@@ -1,0 +1,27 @@
+language: ruby
+
+rvm:
+  - ruby-2.7.6
+
+addons:
+  apt:
+    packages:
+      - fonts-ipafont
+
+before_script:
+  - export DISPLAY=:99.0
+  - nvm install 10.17.0
+  - npm install yarn
+  - yarn install
+
+services:
+  - xvfb
+  - postgresql
+
+script:
+  - bundle exec rails webpacker:install
+  - bundle exec rake db:drop
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
+  - RAILS_ENV=test bundle exec rails webpacker:compile
+  - bundle exec rake spec

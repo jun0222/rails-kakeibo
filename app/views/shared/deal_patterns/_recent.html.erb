@@ -1,0 +1,19 @@
+<% recent_deal_patterns = current_user.deal_patterns.includes(:readonly_entries).recent.limit(10) %>
+<% unless recent_deal_patterns.empty? %>
+  <!-- recent deal patterns -->
+  <div id="recent_deal_patterns" class="side_box">
+    <h4>最近の記入パターン</h4>
+    <%= render :partial => 'shared/deal_patterns/deal_pattern', :collection => recent_deal_patterns %>
+  </div>
+  <%= javascript_tag do %>
+    jQuery(document).ready(function($){
+      $('a.new_deal_with_pattern_link').click(function() {
+        $('#notice').hide()
+        $('#deal_forms').load(this.href, null, function() {
+          loadRecentDealPatterns()
+        })
+        return false
+      })
+    })
+  <% end %>
+<% end %>

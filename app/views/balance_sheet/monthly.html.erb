@@ -1,0 +1,5 @@
+<%= render(:partial => "shared/calendar", :locals => {year: @year, month: @month, switcher: true, data: {url_template: monthly_balance_sheet_path(dummy_year_and_month)}}) %>
+
+<div id="book">
+  <%= render :partial => "balance_sheet" %>
+</div>

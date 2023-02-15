@@ -1,0 +1,32 @@
+<%= render :partial => '/shared/complex_deal_entry_fields', :locals => {:f => f, :deal => @deal}  %>
+  <%= link_to 'パターン登録', '#', :id => 'add_pattern', class: %w(btn btn-default pull-right) %>
+  <%= link_to '記入欄を増やす', deal_entries_path(:id => @deal.new_record? ? 'new' : @deal.id), class: 'add_entry_fields' %>
+  &nbsp;<%= f.submit @deal.new_record? ? '記入' : '変更', :tabindex => "999", :class => 'btn btn-primary' %>
+  <%= javascript_tag do %>
+    jQuery(document).ready(function($){
+      $('a#add_pattern').click(function() {
+        if (
+             ($('#deal_summary_mode').val() == 'unify' && $('#deal_summary').val() == '')
+              ||
+             ($('#deal_summary_mode').val() != 'unify' && jQuery.grep(
+                                                                 $('input.entry_summary').val(),
+                                                                 function(n, i) { return n != ''}
+                                                                ).length == 0)
+            ) {
+          alert('パターンを登録するには摘要が必要です。')
+          return false
+        } // end if
+        $('#deal_pattern_frame').load('<%= deal_patterns_path %>', $(".pattern_field, input[name='authenticity_token']:first, input[name='utf8']:first").serializeArray())
+        return false
+      }) // end click
+
+      $("input#deal_summary").observe_field(0.5, function() {
+        $('div.entry').each(function() {
+          if ($('input.amount', this).val() != '' || $('select', this).val() != '') {
+            $('input.entry_summary', this).val($('input#deal_summary').val())
+          }
+        })
+        $('#patterns').load('<%= deal_suggestions_path(:from => 'complex_deal') %>&keyword=' + encodeURIComponent(this.value))
+      });
+    })
+  <% end %>
