@@ -18,7 +18,7 @@
       }
     %>
 
-    <%= link_to 'パターン登録', '#', :id => 'add_pattern', class: %w(pull-right btn btn-default) %>
+    <%#= link_to 'パターン登録', '#', :id => 'add_pattern', class: %w(pull-right btn btn-default) %>
     &nbsp;<%= f.submit @deal.new_record? ? '記入' : '変更', :tabindex => "14", :class => 'submit btn btn-primary' %>
     <% if !@deal.new_record? %>
       <%= link_to '複数記入にする', {:action => 'edit', :id => @deal.id, :complex => true}, class: 'edit_deal', data: {deal_id: @deal.id} %>
